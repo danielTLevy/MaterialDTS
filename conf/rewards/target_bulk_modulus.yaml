@@ -1,0 +1,8 @@
+# Reward ALIGNN-predicted bulk modulus by distance to a target value.
+use_pareto_metrics: false
+reward_fns: ['TargetBulkModulusReward']
+use_train_rewards: false
+
+# Bulk modulus target and normalization scale, in GPa.
+bulk_modulus_target: 350.0
+bulk_modulus_scale: 400.0

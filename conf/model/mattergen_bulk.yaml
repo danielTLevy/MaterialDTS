@@ -1,0 +1,12 @@
+# Model-level defaults
+checkpoint: './remote/mattergen/checkpoints/ml_bulk_modulus'
+model: mattergen
+num_inference_steps: 1000
+# Conditioning flags for the model
+condition_on_dielectric_bandgap: false
+condition_on_bulk_modulus: true
+eta: 1.0
+# Number of atom-count batches the CrystalGenerator draws from
+num_batches: 10000
+# Classifier-free guidance scale, applied only when a conditioning flag is set
+guidance_factor: 2.0

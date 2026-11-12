@@ -1,0 +1,5 @@
+mattergen_evaluate: true
+relax_structures: false
+structure_matcher: disordered
+save_as: metrics_unrelaxed.json
+save_sun_structures: true

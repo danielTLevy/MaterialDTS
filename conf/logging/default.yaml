@@ -1,0 +1,4 @@
+# Logging / experiment defaults
+use_wandb: false
+project: material-dts
+experiment: default

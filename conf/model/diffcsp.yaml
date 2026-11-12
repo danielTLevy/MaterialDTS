@@ -1,0 +1,6 @@
+# Model-level defaults
+checkpoint: './remote/DiffCSP/checkpoints/mp_gen/'
+model: diffcsp
+num_inference_steps: 1000
+diffcsp_mask_elements: true
+eta: 1.0

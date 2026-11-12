@@ -1,0 +1,112 @@
+[project]
+name = "material-dts"
+version = "0.1.0"
+description = "Inference-time tree search (DTS) sampling on top of pretrained diffusion models for crystal material generation."
+# Pinned to 3.10 exactly: every pinned pyg / dgl wheel below is a cp310-only build.
+requires-python = "==3.10.*"
+
+dependencies = [
+    # --- Vendored generative models (git submodules under remote/) ---
+    "mattergen",
+
+    # --- Property predictors used by src/core/materials_rewards.py ---
+    "alignn==2025.4.1",
+    "dgl==2.4.0+cu118",
+    # Pinned to the version the known-good reference env runs; alignn 2025.4.1
+    # is sensitive to jarvis-tools API drift.
+    "jarvis-tools==2025.5.30",
+    "mattersim==1.1.0",
+
+    # --- Multi-objective evaluation (src/evaluation/pareto_metrics.py) ---
+    "pymoo>=0.6.1",
+
+    # --- Core scientific / orchestration stack ---
+    "numpy<2.0",
+    # ase>=3.24 removed ase.constraints.Filter, which mattersim's BatchRelaxer
+    # (reached via mattergen.evaluation) still imports.
+    "ase==3.23.0",
+    "pandas",
+    "scikit-learn",
+    "scipy",
+    "matplotlib",
+    "hydra-core==1.3.1",
+    "omegaconf==2.3.0",
+    "torch_geometric==2.6.1",
+    "pytorch-lightning==2.0.6",
+    "pymatgen>=2025.1.9",
+    "wandb",
+
+    # --- DiffCSP (remote/DiffCSP, imported from source by src/models/diffcsp_ext.py) runtime deps ---
+    "chemparse",
+    "einops",
+    "p-tqdm",
+    "pathos",
+    "pyxtal",
+    "smact",
+
+    # --- Misc utilities imported directly by src/ and scripts/ ---
+    "colorlog",
+    "python-dotenv",
+    "tqdm",
+    # pytorch-lightning 2.0.6 imports pkg_resources, which setuptools>=81 removed.
+    "setuptools==80.9.0",
+]
+
+# ---------------------------------------------------------------------------
+# uv configuration
+#
+# NOTE: uv only reads [tool.uv.sources] and [[tool.uv.index]] from the
+# *resolution root*. The blocks below are therefore duplicated from
+# remote/mattergen/pyproject.toml -- they are NOT inherited from the path
+# dependency, and without them torch/pyg resolve to PyPI sdists that fail
+# to build.
+# ---------------------------------------------------------------------------
+[tool.uv]
+# The repo is run as `python -m scripts.run_mat` from the repo root, so the
+# root itself is a virtual (non-installed) project.
+package = false
+
+# Only Linux+CUDA is supported: the pinned torch/pyg/dgl wheels are all
+# linux_x86_64 cu118 builds. (mattergen's own pyproject also offers a macOS
+# CPU split, which is incompatible with the dgl pin.)
+environments = ["sys_platform == 'linux'"]
+
+override-dependencies = [
+    # alignn pins `dgl<=1.1.1`, but only dgl>=2.x ships cu118 cp310 wheels and
+    # is what the known-good reference environment actually runs.
+    "dgl==2.4.0+cu118",
+    # alignn pins `pyparsing<3`; pymatgen/matplotlib need >=3.
+    "pyparsing>=3.1",
+    # mattergen pins matplotlib==3.8.4 and monty==2024.7.30, both of which
+    # conflict with the pymatgen version required by mattersim/atomate2.
+    "matplotlib>=3.10",
+    "monty>=2025.3.3",
+    "torch==2.2.1+cu118",
+]
+
+[tool.uv.sources]
+mattergen = { path = "remote/mattergen", editable = true }
+
+torch = { index = "pytorch_linux", marker = "sys_platform == 'linux'" }
+torchvision = { index = "pytorch_linux", marker = "sys_platform == 'linux'" }
+torchaudio = { index = "pytorch_linux", marker = "sys_platform == 'linux'" }
+
+dgl = { url = "https://data.dgl.ai/wheels/torch-2.2/cu118/dgl-2.4.0%2Bcu118-cp310-cp310-manylinux1_x86_64.whl" }
+
+pyg-lib = [
+  { url = "https://data.pyg.org/whl/torch-2.2.0%2Bcu118/pyg_lib-0.4.0%2Bpt22cu118-cp310-cp310-linux_x86_64.whl", marker = "sys_platform == 'linux'" },
+]
+torch_cluster = [
+  { url = "https://data.pyg.org/whl/torch-2.2.0%2Bcu118/torch_cluster-1.6.3%2Bpt22cu118-cp310-cp310-linux_x86_64.whl", marker = "sys_platform == 'linux'" },
+]
+torch_scatter = [
+  { url = "https://data.pyg.org/whl/torch-2.2.0%2Bcu118/torch_scatter-2.1.2%2Bpt22cu118-cp310-cp310-linux_x86_64.whl", marker = "sys_platform == 'linux'" },
+]
+torch_sparse = [
+  { url = "https://data.pyg.org/whl/torch-2.2.0%2Bcu118/torch_sparse-0.6.18%2Bpt22cu118-cp310-cp310-linux_x86_64.whl", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch_linux"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true

@@ -1,0 +1,14 @@
+# Model-level defaults – space group conditioned MatterGen
+checkpoint: './remote/mattergen/checkpoints/space_group'
+model: mattergen
+num_inference_steps: 1000
+# Conditioning flags for the model
+condition_on_dielectric_bandgap: false
+condition_on_bulk_modulus: false
+condition_on_space_group: true
+space_group_target: 204   # Im3Bar
+eta: 1.0
+# Number of atom-count batches the CrystalGenerator draws from
+num_batches: 10000
+# Classifier-free guidance scale, applied only when a conditioning flag is set
+guidance_factor: 2.0

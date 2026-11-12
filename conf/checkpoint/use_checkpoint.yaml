@@ -1,0 +1,16 @@
+# @package _global_
+
+checkpoint:
+  root: ${oc.env:SCRATCH,outputs}/material_dts/checkpoints
+  dir: null  # If null, uses hydra run directory, specify for resuming
+  load_dir: null       # if set, load initial tree from here instead of `dir`
+  wandb_run_id: null   # if set, resume this wandb run ID instead of creating a new one
+  interval: 100000
+  # Optional explicit list of NFE targets to save at. When set, overrides
+  # `interval` — exactly one checkpoint is written per target value.
+  # Example override:
+  #   checkpoint.nfes=[100000,1000000,2500000,5000000,10000000]
+  nfes: null
+  use_slurm_job_id: true
+  use_compression: true
+  use_checkpoint: true

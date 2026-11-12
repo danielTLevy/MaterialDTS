@@ -1,0 +1,24 @@
+# Reward / evaluation defaults
+use_pareto_metrics: false
+# Reward/evaluation flags
+reward_fns: ['TargetDensity15Reward']
+use_train_rewards: false
+
+# Per-objective weights for the log-valued dielectric/bandgap rewards
+# (MaxLogDielectricReward / MaxLogBandgapReward). The reward is
+# ``weight * log(clip(value, log_reward_floor))``.
+#
+# [1/6, 1/2] normalizes each log objective by its std on the training set.
+# [1, 1] leaves log(d) and log(b) unweighted, so a linear scalarization with
+# equal preferences is exactly log(d * b) -- use this to target the product.
+#
+# These weights are applied consistently in three places: the reward functions,
+# the training-set reward baseline used for Pareto metrics, and the
+# value-conditioning arrays (which also set the Tchebycheff ideal point), so
+# node values and the ideal point always live in the same space.
+log_dielectric_weight: 0.16666666666666666  # 1/6
+log_bandgap_weight: 0.5                     # 1/2
+
+# Bulk-modulus rewards use ALIGNN-predicted ml_bulk_modulus in GPa.
+bulk_modulus_target: 350.0
+bulk_modulus_scale: 400.0

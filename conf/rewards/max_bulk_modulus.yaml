@@ -1,0 +1,7 @@
+# Maximize ALIGNN-predicted bulk modulus.
+use_pareto_metrics: false
+reward_fns: ['BulkModulusReward']
+use_train_rewards: false
+
+# Bulk modulus normalization scale, in GPa.
+bulk_modulus_scale: 400.0

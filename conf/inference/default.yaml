@@ -1,0 +1,31 @@
+# DTS / inference defaults
+compute_budget: 1000000
+batch_size: 50
+use_dts: true  # set false for raw best-of-N sampling (no tree, no rewards)
+expand_timesteps: [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100]
+exploration_const: 1.0
+progressive_width_const: 2.0
+progressive_width_alpha: 0.3
+exploration_type: 'ucb'  # 'ucb' or 'epsilon'
+use_exploration: true
+temperature: 0.01
+use_progress_bar: true
+use_conditional_dts: false
+importance_sampling_correction: false
+use_lattice_is_correction: false
+use_is_in_selection: true  # when importance_sampling_correction is true, whether the branch-segment log-weight also enters child-selection logits (backup always uses it regardless)
+is_logeta_clip: null  # per-edge clamp on log importance weights (log_eta) before chain-summing; null = unclipped
+is_self_normalize: false  # when importance_sampling_correction is true, self-normalize the IS backup by logsumexp(log_w) instead of log(num_samples)
+use_tcheby: false
+use_dynamic_conditioning: false
+coeff_alpha: 1.0 # Preference dirichlet
+# Batch-fill: when true, an expandable node with no committed children whose
+# progressive-widening slots are all reserved this wave expands anyway
+# (violating the C*N^alpha cap) so the rollout batch stays full. Conditional
+# DTS only.
+force_expand_to_fill_batch: true
+# Diagnostic metrics (batch fill, PW-violation fraction, expansion depth).
+# Aggregated over each rollout batch and logged to wandb alongside the existing
+# dts/terminal_* metrics (i.e. when terminal nodes are created); nothing is
+# logged per p_sample or per selection step.
+enable_diagnostics: true

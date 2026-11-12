@@ -1,0 +1,3 @@
+hydra:
+  run:
+    dir: ${oc.env:OUTPUT_DIR,outputs/${logging.experiment}/${now:%Y-%m-%d}/${now:%Y-%m-%d_%H-%M-%S-%f}_${oc.env:SLURM_JOB_ID,local}}

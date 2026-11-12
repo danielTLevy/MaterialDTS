@@ -1,0 +1,18 @@
+# Top-level Hydra default composition file. Composes group defaults for the experiment.
+# You can override any group at runtime, e.g. `python -m scripts.run_mat model=diffcsp`
+hydra:
+  run:
+    dir: ${oc.env:OUTPUT_DIR,outputs/${logging.experiment}/${now:%Y-%m-%d}/${now:%Y-%m-%d_%H-%M-%S-%f}_${oc.env:SLURM_JOB_ID,local}}
+
+defaults:
+  - model: mattergen
+  - inference: default
+  - logging: default
+  - rewards: default
+  - evaluation: default
+  - checkpoint: default
+  - _self_
+
+# Optional global seed for reproducibility. Set to null to keep random behavior
+seed: null
+device: cuda

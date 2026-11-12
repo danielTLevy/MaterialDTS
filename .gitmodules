@@ -1,0 +1,6 @@
+[submodule "remote/mattergen"]
+	path = remote/mattergen
+	url = https://github.com/danielTLevy/mattergen-DTS.git
+[submodule "remote/DiffCSP"]
+	path = remote/DiffCSP
+	url = https://github.com/jiaor17/DiffCSP.git

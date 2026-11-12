@@ -1,0 +1,16 @@
+# DTS / inference defaults
+compute_budget: 1000000
+batch_size: 50
+use_dts: true  # set false for raw best-of-N sampling (no tree, no rewards)
+expand_timesteps: [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100]
+exploration_const: 1.0
+progressive_width_const: 2.0
+progressive_width_alpha: 0.3
+exploration_type: 'ucb'  # 'ucb' or 'epsilon'
+use_exploration: true
+temperature: 0.01
+use_progress_bar: true
+use_conditional_dts: true
+importance_sampling_correction: true
+use_tcheby: true
+use_dynamic_conditioning: true

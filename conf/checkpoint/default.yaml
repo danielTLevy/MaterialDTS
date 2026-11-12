@@ -1,0 +1,12 @@
+# @package _global_
+
+checkpoint:
+  root: ${oc.env:SCRATCH,outputs}/material_dts/checkpoints
+  use_checkpoint: true
+  dir: null  # If null, uses hydra run directory, specify for resuming
+  load_dir: null       # if set, load initial tree from here instead of `dir`
+  wandb_run_id: null   # if set, resume this wandb run ID instead of creating a new one
+  interval: 250000        # NFEs between checkpoint saves
+  max_checkpoints: 3      # number of rolling checkpoints to retain
+  use_slurm_job_id: true
+  use_compression: true
