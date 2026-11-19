@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "MaterialDTS: Inference Time Adaptation of Crystal Generative Models with Diffusion Tree Sampling"
+type: software
+license: MIT
+repository-code: "https://github.com/danielTLevy/materialDTS"
+authors:
+  - family-names: Levy
+    given-names: Daniel T.
+  - family-names: Jain
+    given-names: Vineet
+  - family-names: Akhound-Sadegh
+    given-names: Tara
+  - family-names: Kaba
+    given-names: Sékou-Oumar
+  - family-names: Ravanbakhsh
+    given-names: Siamak
+preferred-citation:
+  type: article
+  title: "Diffusion Tree Sampling for Inference Time Adaptation of Crystal Generative Models"
+  authors:
+    - family-names: Levy
+      given-names: Daniel T.
+    - family-names: Jain
+      given-names: Vineet
+    - family-names: Akhound-Sadegh
+      given-names: Tara
+    - family-names: Kaba
+      given-names: Sékou-Oumar
+    - family-names: Ravanbakhsh
+      given-names: Siamak
+  year: 2026
+  journal: "arXiv preprint arXiv:2611.17462"
+  url: "https://arxiv.org/abs/2611.17462"
+  identifiers:
+    - type: other
+      value: "arXiv:2611.17462"
+      description: arXiv identifier
